@@ -8,7 +8,7 @@ Trained on the [Telco Customer Churn](https://www.kaggle.com/datasets/blastchar/
 dataset (7,043 customers, 26.5% churn).
 
 <!-- Replace the two URLs below after you push and deploy. -->
-[![CI](https://github.com/<your-username>/churn-radar/actions/workflows/ci.yml/badge.svg)](https://github.com/<your-username>/churn-radar/actions/workflows/ci.yml)
+[![CI](https://github.com/<aadrikakh-ak>/churn-radar/actions/workflows/ci.yml/badge.svg)](https://github.com/<aadrikakh-ak>/churn-radar/actions/workflows/ci.yml)
 [![Live demo](https://img.shields.io/badge/demo-live-0e7c6b)](https://your-app.onrender.com)
 ![Python](https://img.shields.io/badge/python-3.13-blue)
 ![TensorFlow](https://img.shields.io/badge/tensorflow-2.21-orange)
