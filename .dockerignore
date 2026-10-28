@@ -1,0 +1,12 @@
+**/node_modules
+**/dist
+**/__pycache__
+**/*.pyc
+.git
+.github
+.venv
+data/raw/*.csv
+docs/
+notebooks/
+*.md
+!README.md

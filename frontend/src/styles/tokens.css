@@ -1,0 +1,87 @@
+/* Design tokens.
+   The signal ramp is functional, not decorative: every colour in it maps to a
+   risk band the model actually emits, so a hue change always means a change in
+   meaning. Nothing else in the UI is allowed to use those four colours. */
+
+:root {
+  /* surfaces — cool instrument enamel, not warm paper */
+  --page: #edeff0;
+  --panel: #ffffff;
+  --panel-sunk: #f4f6f6;
+  --line: #d3d9db;
+  --line-strong: #b4bec1;
+
+  /* text */
+  --ink: #10181c;
+  --ink-soft: #3a4a50;
+  --muted: #5c6b70;
+  --faint: #8c9ca1;
+
+  /* signal ramp: retained -> critical */
+  --hold: #0e7c6b;
+  --watch: #c98a1e;
+  --risk: #b4442e;
+  --critical: #8c1d2e;
+
+  --hold-wash: rgba(14, 124, 107, 0.1);
+  --watch-wash: rgba(201, 138, 30, 0.1);
+  --risk-wash: rgba(180, 68, 46, 0.1);
+  --critical-wash: rgba(140, 29, 46, 0.12);
+
+  --accent: #0e7c6b;
+  --accent-ink: #ffffff;
+
+  --focus: #0e7c6b;
+  --shadow-panel: 0 1px 2px rgba(16, 24, 28, 0.05);
+  --shadow-raised: 0 8px 28px -12px rgba(16, 24, 28, 0.3);
+
+  /* type */
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* a modular scale, 1.2 ratio, rounded to whole px */
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-base: 0.9375rem;
+  --t-md: 1.0625rem;
+  --t-lg: 1.375rem;
+  --t-xl: 1.75rem;
+  --t-2xl: 2.25rem;
+  --t-3xl: 3rem;
+
+  --radius: 6px;
+  --radius-lg: 10px;
+
+  --gutter: 28px;
+  --max: 1320px;
+}
+
+:root[data-theme="dark"] {
+  --page: #0b1113;
+  --panel: #131b1e;
+  --panel-sunk: #0e1619;
+  --line: #243034;
+  --line-strong: #35464b;
+
+  --ink: #e7eef0;
+  --ink-soft: #c2d0d4;
+  --muted: #90a4a9;
+  --faint: #6b8086;
+
+  --hold: #2db39b;
+  --watch: #e0a53c;
+  --risk: #e2714f;
+  --critical: #e05070;
+
+  --hold-wash: rgba(45, 179, 155, 0.14);
+  --watch-wash: rgba(224, 165, 60, 0.14);
+  --risk-wash: rgba(226, 113, 79, 0.14);
+  --critical-wash: rgba(224, 80, 112, 0.16);
+
+  --accent: #2db39b;
+  --accent-ink: #06201c;
+
+  --focus: #2db39b;
+  --shadow-panel: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-raised: 0 10px 30px -14px rgba(0, 0, 0, 0.75);
+}

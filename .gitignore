@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Node
+node_modules/
+frontend/dist/
+.vite/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local env
+.env
+.env.local
+
+# Training leftovers (the shipped artifacts in artifacts/ are committed on
+# purpose so the app runs straight after a clone)
+artifacts/checkpoint*.keras
+backend/static/

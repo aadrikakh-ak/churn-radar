@@ -1,0 +1,726 @@
+/* ------------------------------------------------------------ tone helpers
+   The only place the signal ramp is allowed to be applied by name. */
+.tone-hold {
+  color: var(--hold);
+}
+.tone-watch {
+  color: var(--watch);
+}
+.tone-risk {
+  color: var(--risk);
+}
+.tone-critical {
+  color: var(--critical);
+}
+
+.zone-hold {
+  background: var(--hold-wash);
+}
+.zone-watch {
+  background: var(--watch-wash);
+}
+.zone-risk {
+  background: var(--risk-wash);
+}
+.zone-critical {
+  background: var(--critical-wash);
+}
+
+/* ------------------------------------------------------------- risk scale */
+.scale {
+  --needle-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  padding: 56px 0 30px;
+  user-select: none;
+  touch-action: none;
+}
+
+.scale-flag {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  transition: left 0.75s var(--needle-ease);
+  white-space: nowrap;
+}
+
+.scale[data-pending] {
+  opacity: 0.45;
+}
+
+.scale-flag-value {
+  font-size: var(--t-2xl);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.scale-flag-value small {
+  font-size: 0.45em;
+  margin-left: 2px;
+  opacity: 0.7;
+}
+
+.scale-flag-band {
+  font-size: var(--t-xs);
+  color: var(--muted);
+}
+
+.scale-track {
+  position: relative;
+  height: 44px;
+  cursor: ew-resize;
+}
+
+/* Clipped layer: rounded corners apply to the coloured bed only, so the
+   needle and the drag handle can break out of the track above. */
+.scale-bed {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--panel-sunk);
+}
+
+.scale-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+.scale-tick {
+  position: absolute;
+  bottom: 0;
+  width: 1px;
+  height: 7px;
+  background: var(--line-strong);
+}
+
+.scale-tick[data-major] {
+  height: 13px;
+}
+
+/* The average customer — the anchor every attribution is measured against.
+   Dotted and faint so it never competes with the threshold, which is a
+   control the user actually moves. */
+.scale-baseline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 1px dotted var(--faint);
+  z-index: 1;
+}
+
+.scale-ghost {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1.5px solid var(--muted);
+  transition: left 0.5s var(--needle-ease);
+  z-index: 2;
+}
+
+.scale-needle {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 3px;
+  margin-left: -1.5px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: left 0.75s var(--needle-ease);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--panel) 70%, transparent);
+  z-index: 4;
+}
+
+.scale-threshold {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  width: 20px;
+  margin-left: -10px;
+  display: grid;
+  place-items: center;
+  cursor: ew-resize;
+  z-index: 5;
+}
+
+.scale-threshold::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 2px solid var(--ink);
+  opacity: 0.7;
+}
+
+.scale-threshold-grip {
+  position: absolute;
+  bottom: -5px;
+  width: 15px;
+  height: 11px;
+  background: var(--panel);
+  border: 1.5px solid var(--ink);
+  border-radius: 3px;
+  transition: transform 0.12s;
+}
+
+.scale-threshold:hover .scale-threshold-grip,
+.scale-threshold[data-dragging] .scale-threshold-grip,
+.scale-threshold:focus-visible .scale-threshold-grip {
+  transform: scale(1.18);
+}
+
+.scale-axis {
+  position: relative;
+  height: 20px;
+  /* Clears the threshold grip, which overhangs the track by 13px. */
+  margin-top: 20px;
+  font-size: var(--t-xs);
+  color: var(--faint);
+}
+
+.scale-axis > span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.scale-axis-threshold {
+  color: var(--ink-soft) !important;
+  font-weight: 500;
+  top: 0;
+  background: var(--panel);
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------- driver chart */
+.drivers {
+  display: flex;
+  flex-direction: column;
+}
+
+.driver-axis {
+  position: relative;
+  height: 15px;
+  font-size: var(--t-xs);
+  color: var(--faint);
+  margin-bottom: 6px;
+}
+
+.driver-axis span {
+  position: absolute;
+}
+
+.driver-axis span:first-child {
+  right: 50%;
+  margin-right: 10px;
+}
+
+.driver-axis span:last-child {
+  left: 50%;
+  margin-left: 10px;
+}
+
+.driver-row {
+  display: grid;
+  grid-template-columns: minmax(130px, 170px) 1fr 62px;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 0;
+}
+
+.driver-label {
+  min-width: 0;
+}
+
+.driver-label strong {
+  display: block;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.driver-label span {
+  display: block;
+  font-size: var(--t-xs);
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.driver-track {
+  position: relative;
+  height: 22px;
+  border-left: 1px solid var(--line-strong);
+  border-right: 1px solid transparent;
+}
+
+/* One-sided variant: global importance has no signed direction, so it gets
+   no centre line to diverge from. */
+.driver-track[data-oneside] {
+  border-left: 0;
+}
+
+.driver-track[data-oneside]::before {
+  display: none;
+}
+
+/* The centre line is the average customer; bars grow away from it. */
+.driver-track::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  bottom: -5px;
+  border-left: 1px solid var(--line-strong);
+}
+
+.driver-bar {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border-radius: 2px;
+  background: currentColor;
+  transform-origin: var(--origin, left) center;
+  animation: grow-bar 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes grow-bar {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.driver-value {
+  font-size: var(--t-xs);
+  text-align: right;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- offers */
+.offer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 16px;
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.offer:last-child {
+  border-bottom: 0;
+}
+
+.offer-name {
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+
+.offer-change {
+  grid-column: 1;
+  font-size: var(--t-xs);
+  color: var(--faint);
+  font-family: var(--mono);
+}
+
+.offer-figures {
+  grid-row: 1 / 3;
+  grid-column: 2;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.offer-prob {
+  font-size: var(--t-md);
+  font-weight: 500;
+}
+
+.offer-delta {
+  font-size: var(--t-xs);
+  color: var(--hold);
+}
+
+.offer-delta[data-worse] {
+  color: var(--risk);
+}
+
+/* ------------------------------------------------------------- stat tiles */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.stat {
+  background: var(--panel);
+  padding: 15px 18px;
+}
+
+.stat dt {
+  font-size: var(--t-xs);
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.stat dd {
+  margin: 0;
+  font-size: var(--t-lg);
+  font-weight: 500;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.stat small {
+  display: block;
+  font-family: var(--sans);
+  font-size: var(--t-xs);
+  font-weight: 400;
+  color: var(--faint);
+  margin-top: 2px;
+  letter-spacing: 0;
+}
+
+/* ------------------------------------------------------------------ chips */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--t-xs);
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+
+.chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ------------------------------------------------------------- assess page */
+.assess-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.form-group + .form-group {
+  margin-top: 20px;
+}
+
+.form-group > h4 {
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--line);
+}
+
+.form-rows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+
+.form-rows .span-2 {
+  grid-column: span 2;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.presets {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: var(--t-xs);
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+.presets button {
+  appearance: none;
+  font: inherit;
+  font-size: var(--t-xs);
+  background: var(--panel-sunk);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  padding: 3px 9px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.presets button:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.form-group + .form-group,
+.presets + .form-group {
+  margin-top: 20px;
+}
+
+.verdict {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 22px;
+  border-top: 1px solid var(--line);
+  background: var(--panel-sunk);
+  font-size: var(--t-sm);
+}
+
+.verdict-meta {
+  color: var(--muted);
+  font-size: var(--t-xs);
+}
+
+.actions-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actions-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.actions-list li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  margin-top: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ---------------------------------------------------------- portfolio page */
+.drop {
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 40px 24px;
+  text-align: center;
+  background: var(--panel-sunk);
+  transition: border-color 0.14s, background 0.14s;
+}
+
+.drop[data-over] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--panel-sunk));
+}
+
+.drop h3 {
+  margin-bottom: 6px;
+}
+
+.drop p {
+  color: var(--muted);
+  font-size: var(--t-sm);
+  margin-bottom: 16px;
+}
+
+.histogram {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 130px;
+}
+
+.histogram-bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  background: currentColor;
+  min-height: 2px;
+  position: relative;
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes rise {
+  from {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.histogram-axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--t-xs);
+  color: var(--faint);
+  margin-top: 6px;
+}
+
+.table-scroll {
+  max-height: 480px;
+  overflow: auto;
+}
+
+.table-scroll thead th {
+  position: sticky;
+  top: 0;
+  background: var(--panel);
+  z-index: 1;
+}
+
+.table-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.table-toolbar input[type="search"] {
+  font: inherit;
+  font-size: var(--t-sm);
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
+  min-width: 240px;
+}
+
+.table-toolbar input[type="search"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable:hover {
+  color: var(--ink);
+}
+
+/* -------------------------------------------------------------- model page */
+.curve-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.curve-caption {
+  font-size: var(--t-xs);
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.plot-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.arch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+}
+
+.arch-layer {
+  padding: 7px 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-sunk);
+  white-space: nowrap;
+}
+
+.arch-arrow {
+  color: var(--faint);
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 7px 18px;
+  font-size: var(--t-sm);
+}
+
+.kv dt {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.kv dd {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: var(--t-xs);
+  text-align: right;
+}
+
+.section-gap {
+  display: grid;
+  gap: 22px;
+}
+
+@media (max-width: 980px) {
+  .assess-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .form-rows {
+    grid-template-columns: 1fr;
+  }
+  .form-rows .span-2 {
+    grid-column: span 1;
+  }
+  .driver-row {
+    grid-template-columns: 110px 1fr 50px;
+    gap: 8px;
+  }
+  .scale-flag-value {
+    font-size: var(--t-xl);
+  }
+}

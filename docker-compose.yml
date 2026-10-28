@@ -1,0 +1,16 @@
+# Local run of the production image:  docker compose up --build  ->  :8000
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      CORS_ORIGINS: "*"
+      MAX_BATCH_ROWS: "20000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health').status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 90s
+      retries: 3
+    restart: unless-stopped

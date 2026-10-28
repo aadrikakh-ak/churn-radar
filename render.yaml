@@ -1,0 +1,15 @@
+# Render blueprint. Push to GitHub, then New -> Blueprint and point at the repo.
+# The free instance type sleeps when idle; the first request after a sleep
+# takes ~40s while TensorFlow loads the model.
+services:
+  - type: web
+    name: churn-radar
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: MAX_BATCH_ROWS
+        value: "20000"

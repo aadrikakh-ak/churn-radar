@@ -1,0 +1,718 @@
+{
+  "feature_names": [
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges",
+    "SeniorCitizen",
+    "AvgChargesPerMonth",
+    "ChargesDelta",
+    "NumServices",
+    "ContractMonths",
+    "TenureYears",
+    "MonthlyChargeRatio",
+    "gender_Female",
+    "gender_Male",
+    "Partner_No",
+    "Partner_Yes",
+    "Dependents_No",
+    "Dependents_Yes",
+    "PhoneService_No",
+    "PhoneService_Yes",
+    "PaperlessBilling_No",
+    "PaperlessBilling_Yes",
+    "MultipleLines_No",
+    "MultipleLines_No phone service",
+    "MultipleLines_Yes",
+    "InternetService_DSL",
+    "InternetService_Fiber optic",
+    "InternetService_No",
+    "OnlineSecurity_No",
+    "OnlineSecurity_No internet service",
+    "OnlineSecurity_Yes",
+    "OnlineBackup_No",
+    "OnlineBackup_No internet service",
+    "OnlineBackup_Yes",
+    "DeviceProtection_No",
+    "DeviceProtection_No internet service",
+    "DeviceProtection_Yes",
+    "TechSupport_No",
+    "TechSupport_No internet service",
+    "TechSupport_Yes",
+    "StreamingTV_No",
+    "StreamingTV_No internet service",
+    "StreamingTV_Yes",
+    "StreamingMovies_No",
+    "StreamingMovies_No internet service",
+    "StreamingMovies_Yes",
+    "Contract_Month-to-month",
+    "Contract_One year",
+    "Contract_Two year",
+    "PaymentMethod_Bank transfer (automatic)",
+    "PaymentMethod_Credit card (automatic)",
+    "PaymentMethod_Electronic check",
+    "PaymentMethod_Mailed check",
+    "TenureBucket_0-6m",
+    "TenureBucket_1-2y",
+    "TenureBucket_2-4y",
+    "TenureBucket_4y+",
+    "TenureBucket_6-12m"
+  ],
+  "source_map": {
+    "tenure": "tenure",
+    "MonthlyCharges": "MonthlyCharges",
+    "TotalCharges": "TotalCharges",
+    "SeniorCitizen": "SeniorCitizen",
+    "AvgChargesPerMonth": "AvgChargesPerMonth",
+    "ChargesDelta": "ChargesDelta",
+    "NumServices": "NumServices",
+    "ContractMonths": "ContractMonths",
+    "TenureYears": "TenureYears",
+    "MonthlyChargeRatio": "MonthlyChargeRatio",
+    "gender_Female": "gender",
+    "gender_Male": "gender",
+    "Partner_No": "Partner",
+    "Partner_Yes": "Partner",
+    "Dependents_No": "Dependents",
+    "Dependents_Yes": "Dependents",
+    "PhoneService_No": "PhoneService",
+    "PhoneService_Yes": "PhoneService",
+    "PaperlessBilling_No": "PaperlessBilling",
+    "PaperlessBilling_Yes": "PaperlessBilling",
+    "MultipleLines_No": "MultipleLines",
+    "MultipleLines_No phone service": "MultipleLines",
+    "MultipleLines_Yes": "MultipleLines",
+    "InternetService_DSL": "InternetService",
+    "InternetService_Fiber optic": "InternetService",
+    "InternetService_No": "InternetService",
+    "OnlineSecurity_No": "OnlineSecurity",
+    "OnlineSecurity_No internet service": "OnlineSecurity",
+    "OnlineSecurity_Yes": "OnlineSecurity",
+    "OnlineBackup_No": "OnlineBackup",
+    "OnlineBackup_No internet service": "OnlineBackup",
+    "OnlineBackup_Yes": "OnlineBackup",
+    "DeviceProtection_No": "DeviceProtection",
+    "DeviceProtection_No internet service": "DeviceProtection",
+    "DeviceProtection_Yes": "DeviceProtection",
+    "TechSupport_No": "TechSupport",
+    "TechSupport_No internet service": "TechSupport",
+    "TechSupport_Yes": "TechSupport",
+    "StreamingTV_No": "StreamingTV",
+    "StreamingTV_No internet service": "StreamingTV",
+    "StreamingTV_Yes": "StreamingTV",
+    "StreamingMovies_No": "StreamingMovies",
+    "StreamingMovies_No internet service": "StreamingMovies",
+    "StreamingMovies_Yes": "StreamingMovies",
+    "Contract_Month-to-month": "Contract",
+    "Contract_One year": "Contract",
+    "Contract_Two year": "Contract",
+    "PaymentMethod_Bank transfer (automatic)": "PaymentMethod",
+    "PaymentMethod_Credit card (automatic)": "PaymentMethod",
+    "PaymentMethod_Electronic check": "PaymentMethod",
+    "PaymentMethod_Mailed check": "PaymentMethod",
+    "TenureBucket_0-6m": "TenureBucket",
+    "TenureBucket_1-2y": "TenureBucket",
+    "TenureBucket_2-4y": "TenureBucket",
+    "TenureBucket_4y+": "TenureBucket",
+    "TenureBucket_6-12m": "TenureBucket"
+  },
+  "baseline_vector": [
+    -2.98869551329517e-08,
+    -4.521731877815682e-09,
+    3.4940654813908623e-09,
+    -2.9564145620497584e-07,
+    -1.2017650874440733e-08,
+    4.700666522694519e-08,
+    -1.9344306712021364e-10,
+    -4.275212575066689e-07,
+    -2.98869551329517e-08,
+    -2.0456603522234218e-08,
+    0.4973630905151367,
+    0.5026369094848633,
+    0.518864095211029,
+    0.48113590478897095,
+    0.7024340629577637,
+    0.29756593704223633,
+    0.10060852020978928,
+    0.8993914723396301,
+    0.40770789980888367,
+    0.592292070388794,
+    0.47606492042541504,
+    0.10060852020978928,
+    0.4233265817165375,
+    0.3417849838733673,
+    0.4415821433067322,
+    0.21663285791873932,
+    0.49472618103027344,
+    0.21663285791873932,
+    0.28864097595214844,
+    0.43448275327682495,
+    0.21663285791873932,
+    0.34888437390327454,
+    0.43407708406448364,
+    0.21663285791873932,
+    0.34929007291793823,
+    0.4890466630458832,
+    0.21663285791873932,
+    0.2943204939365387,
+    0.3896551728248596,
+    0.21663285791873932,
+    0.39371195435523987,
+    0.39168357849121094,
+    0.21663285791873932,
+    0.39168357849121094,
+    0.5484787225723267,
+    0.20973630249500275,
+    0.2417849898338318,
+    0.22028397023677826,
+    0.21643002331256866,
+    0.3354969620704651,
+    0.227789044380188,
+    0.20892494916915894,
+    0.1434077024459839,
+    0.22677484154701233,
+    0.318052738904953,
+    0.10283975303173065
+  ],
+  "thresholds": {
+    "default": 0.29,
+    "f1_optimal": 0.29,
+    "cost_optimal": 0.21,
+    "high_recall": 0.295,
+    "sweep": [
+      {
+        "threshold": 0.05,
+        "f1": 0.51607,
+        "precision": 0.3509,
+        "recall": 0.975,
+        "cost": 540.0
+      },
+      {
+        "threshold": 0.07,
+        "f1": 0.54,
+        "precision": 0.375,
+        "recall": 0.96429,
+        "cost": 500.0
+      },
+      {
+        "threshold": 0.09,
+        "f1": 0.56362,
+        "precision": 0.3994,
+        "recall": 0.95714,
+        "cost": 463.0
+      },
+      {
+        "threshold": 0.11,
+        "f1": 0.57112,
+        "precision": 0.41167,
+        "recall": 0.93214,
+        "cost": 468.0
+      },
+      {
+        "threshold": 0.13,
+        "f1": 0.58597,
+        "precision": 0.42881,
+        "recall": 0.925,
+        "cost": 450.0
+      },
+      {
+        "threshold": 0.15,
+        "f1": 0.60047,
+        "precision": 0.44876,
+        "recall": 0.90714,
+        "cost": 442.0
+      },
+      {
+        "threshold": 0.17,
+        "f1": 0.60414,
+        "precision": 0.45841,
+        "recall": 0.88571,
+        "cost": 453.0
+      },
+      {
+        "threshold": 0.19,
+        "f1": 0.61596,
+        "precision": 0.47318,
+        "recall": 0.88214,
+        "cost": 440.0
+      },
+      {
+        "threshold": 0.21,
+        "f1": 0.62982,
+        "precision": 0.49197,
+        "recall": 0.875,
+        "cost": 428.0
+      },
+      {
+        "threshold": 0.23,
+        "f1": 0.63492,
+        "precision": 0.5042,
+        "recall": 0.85714,
+        "cost": 436.0
+      },
+      {
+        "threshold": 0.25,
+        "f1": 0.63784,
+        "precision": 0.51304,
+        "recall": 0.84286,
+        "cost": 444.0
+      },
+      {
+        "threshold": 0.27,
+        "f1": 0.63421,
+        "precision": 0.51936,
+        "recall": 0.81429,
+        "cost": 471.0
+      },
+      {
+        "threshold": 0.29,
+        "f1": 0.64205,
+        "precision": 0.53302,
+        "recall": 0.80714,
+        "cost": 468.0
+      },
+      {
+        "threshold": 0.31,
+        "f1": 0.63918,
+        "precision": 0.54386,
+        "recall": 0.775,
+        "cost": 497.0
+      },
+      {
+        "threshold": 0.33,
+        "f1": 0.63348,
+        "precision": 0.5483,
+        "recall": 0.75,
+        "cost": 523.0
+      },
+      {
+        "threshold": 0.35,
+        "f1": 0.63339,
+        "precision": 0.56233,
+        "recall": 0.725,
+        "cost": 543.0
+      },
+      {
+        "threshold": 0.37,
+        "f1": 0.63158,
+        "precision": 0.57061,
+        "recall": 0.70714,
+        "cost": 559.0
+      },
+      {
+        "threshold": 0.39,
+        "f1": 0.62273,
+        "precision": 0.57798,
+        "recall": 0.675,
+        "cost": 593.0
+      },
+      {
+        "threshold": 0.41,
+        "f1": 0.61433,
+        "precision": 0.58824,
+        "recall": 0.64286,
+        "cost": 626.0
+      },
+      {
+        "threshold": 0.43,
+        "f1": 0.62167,
+        "precision": 0.61837,
+        "recall": 0.625,
+        "cost": 633.0
+      },
+      {
+        "threshold": 0.45,
+        "f1": 0.61538,
+        "precision": 0.63158,
+        "recall": 0.6,
+        "cost": 658.0
+      },
+      {
+        "threshold": 0.47,
+        "f1": 0.61248,
+        "precision": 0.6506,
+        "recall": 0.57857,
+        "cost": 677.0
+      },
+      {
+        "threshold": 0.49,
+        "f1": 0.61479,
+        "precision": 0.67521,
+        "recall": 0.56429,
+        "cost": 686.0
+      },
+      {
+        "threshold": 0.51,
+        "f1": 0.60484,
+        "precision": 0.69444,
+        "recall": 0.53571,
+        "cost": 716.0
+      },
+      {
+        "threshold": 0.53,
+        "f1": 0.59414,
+        "precision": 0.71717,
+        "recall": 0.50714,
+        "cost": 746.0
+      },
+      {
+        "threshold": 0.55,
+        "f1": 0.56587,
+        "precision": 0.71585,
+        "recall": 0.46786,
+        "cost": 797.0
+      },
+      {
+        "threshold": 0.57,
+        "f1": 0.53515,
+        "precision": 0.73292,
+        "recall": 0.42143,
+        "cost": 853.0
+      },
+      {
+        "threshold": 0.59,
+        "f1": 0.50235,
+        "precision": 0.73288,
+        "recall": 0.38214,
+        "cost": 904.0
+      },
+      {
+        "threshold": 0.61,
+        "f1": 0.46569,
+        "precision": 0.74219,
+        "recall": 0.33929,
+        "cost": 958.0
+      },
+      {
+        "threshold": 0.63,
+        "f1": 0.42929,
+        "precision": 0.73276,
+        "recall": 0.30357,
+        "cost": 1006.0
+      },
+      {
+        "threshold": 0.65,
+        "f1": 0.41432,
+        "precision": 0.72973,
+        "recall": 0.28929,
+        "cost": 1025.0
+      },
+      {
+        "threshold": 0.67,
+        "f1": 0.39474,
+        "precision": 0.75,
+        "recall": 0.26786,
+        "cost": 1050.0
+      },
+      {
+        "threshold": 0.69,
+        "f1": 0.36856,
+        "precision": 0.76404,
+        "recall": 0.24286,
+        "cost": 1081.0
+      },
+      {
+        "threshold": 0.71,
+        "f1": 0.33239,
+        "precision": 0.78667,
+        "recall": 0.21071,
+        "cost": 1121.0
+      },
+      {
+        "threshold": 0.73,
+        "f1": 0.28909,
+        "precision": 0.83051,
+        "recall": 0.175,
+        "cost": 1165.0
+      },
+      {
+        "threshold": 0.75,
+        "f1": 0.20497,
+        "precision": 0.78571,
+        "recall": 0.11786,
+        "cost": 1244.0
+      },
+      {
+        "threshold": 0.77,
+        "f1": 0.14887,
+        "precision": 0.7931,
+        "recall": 0.08214,
+        "cost": 1291.0
+      },
+      {
+        "threshold": 0.79,
+        "f1": 0.11296,
+        "precision": 0.80952,
+        "recall": 0.06071,
+        "cost": 1319.0
+      },
+      {
+        "threshold": 0.81,
+        "f1": 0.06826,
+        "precision": 0.76923,
+        "recall": 0.03571,
+        "cost": 1353.0
+      },
+      {
+        "threshold": 0.83,
+        "f1": 0.02807,
+        "precision": 0.8,
+        "recall": 0.01429,
+        "cost": 1381.0
+      },
+      {
+        "threshold": 0.85,
+        "f1": 0.02113,
+        "precision": 0.75,
+        "recall": 0.01071,
+        "cost": 1386.0
+      },
+      {
+        "threshold": 0.87,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "cost": 1401.0
+      },
+      {
+        "threshold": 0.89,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "cost": 1400.0
+      },
+      {
+        "threshold": 0.91,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "cost": 1400.0
+      },
+      {
+        "threshold": 0.93,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "cost": 1400.0
+      },
+      {
+        "threshold": 0.95,
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "cost": 1400.0
+      }
+    ]
+  },
+  "calibration": {
+    "method": "platt",
+    "a": 1.022775457579467,
+    "b": -1.1854077525047988
+  },
+  "class_weight": {
+    "0": 0.680563224737714,
+    "1": 1.8845565749235473
+  },
+  "architecture": [
+    128,
+    64,
+    32
+  ],
+  "dropout": [
+    0.4,
+    0.3,
+    0.2
+  ],
+  "ensemble_size": 5,
+  "member_val_roc_auc": [
+    0.8446175441826215,
+    0.8498964469808541,
+    0.8477793630338732,
+    0.8502830449189985,
+    0.8476919182621503
+  ],
+  "ensemble_val_roc_auc": 0.8498274116347571,
+  "n_inputs": 56,
+  "n_parameters": 91685,
+  "trained_at": "2026-10-28T13:59:18Z",
+  "epochs_run": 88,
+  "train_seconds": 215.7,
+  "rows": {
+    "train": 4930,
+    "validation": 1056,
+    "test": 1057
+  },
+  "schema": {
+    "numeric": {
+      "tenure": {
+        "min": 0.0,
+        "max": 72.0,
+        "mean": 32.37114865824223,
+        "median": 29.0
+      },
+      "MonthlyCharges": {
+        "min": 18.25,
+        "max": 118.75,
+        "mean": 64.76169246059918,
+        "median": 70.35
+      },
+      "TotalCharges": {
+        "min": 0.0,
+        "max": 8684.8,
+        "mean": 2279.7343035638223,
+        "median": 1394.55
+      },
+      "SeniorCitizen": {
+        "min": 0.0,
+        "max": 1.0,
+        "mean": 0.1621468124378816,
+        "median": 0.0
+      },
+      "AvgChargesPerMonth": {
+        "min": 13.775,
+        "max": 121.4,
+        "mean": 64.76290591667771,
+        "median": 70.3375
+      },
+      "ChargesDelta": {
+        "min": -18.89999999999999,
+        "max": 19.125000000000007,
+        "mean": -0.0012134560785468165,
+        "median": 0.0
+      },
+      "NumServices": {
+        "min": 1.0,
+        "max": 9.0,
+        "mean": 4.146244498083203,
+        "median": 4.0
+      },
+      "ContractMonths": {
+        "min": 1.0,
+        "max": 24.0,
+        "mean": 8.835865398267783,
+        "median": 1.0
+      },
+      "TenureYears": {
+        "min": 0.0,
+        "max": 6.0,
+        "mean": 2.6975957215201856,
+        "median": 2.4166666666666665
+      },
+      "MonthlyChargeRatio": {
+        "min": 0.6355446355446355,
+        "max": 1.4506283662477557,
+        "mean": 1.002307679762241,
+        "median": 1.0
+      }
+    },
+    "categorical": {
+      "gender": [
+        "Female",
+        "Male"
+      ],
+      "Partner": [
+        "No",
+        "Yes"
+      ],
+      "Dependents": [
+        "No",
+        "Yes"
+      ],
+      "PhoneService": [
+        "No",
+        "Yes"
+      ],
+      "PaperlessBilling": [
+        "No",
+        "Yes"
+      ],
+      "MultipleLines": [
+        "No",
+        "No phone service",
+        "Yes"
+      ],
+      "InternetService": [
+        "DSL",
+        "Fiber optic",
+        "No"
+      ],
+      "OnlineSecurity": [
+        "No",
+        "No internet service",
+        "Yes"
+      ],
+      "OnlineBackup": [
+        "No",
+        "No internet service",
+        "Yes"
+      ],
+      "DeviceProtection": [
+        "No",
+        "No internet service",
+        "Yes"
+      ],
+      "TechSupport": [
+        "No",
+        "No internet service",
+        "Yes"
+      ],
+      "StreamingTV": [
+        "No",
+        "No internet service",
+        "Yes"
+      ],
+      "StreamingMovies": [
+        "No",
+        "No internet service",
+        "Yes"
+      ],
+      "Contract": [
+        "Month-to-month",
+        "One year",
+        "Two year"
+      ],
+      "PaymentMethod": [
+        "Bank transfer (automatic)",
+        "Credit card (automatic)",
+        "Electronic check",
+        "Mailed check"
+      ],
+      "TenureBucket": [
+        "0-6m",
+        "1-2y",
+        "2-4y",
+        "4y+",
+        "6-12m"
+      ]
+    },
+    "user_inputs": [
+      "tenure",
+      "MonthlyCharges",
+      "TotalCharges",
+      "SeniorCitizen",
+      "gender",
+      "Partner",
+      "Dependents",
+      "PhoneService",
+      "PaperlessBilling",
+      "MultipleLines",
+      "InternetService",
+      "OnlineSecurity",
+      "OnlineBackup",
+      "DeviceProtection",
+      "TechSupport",
+      "StreamingTV",
+      "StreamingMovies",
+      "Contract",
+      "PaymentMethod"
+    ],
+    "derived": [
+      "AvgChargesPerMonth",
+      "ChargesDelta",
+      "NumServices",
+      "ContractMonths",
+      "TenureYears",
+      "MonthlyChargeRatio",
+      "TenureBucket"
+    ]
+  }
+}
