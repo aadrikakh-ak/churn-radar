@@ -3,11 +3,12 @@ import { api } from "./api.js";
 import Assess from "./pages/Assess.jsx";
 import Portfolio from "./pages/Portfolio.jsx";
 import ModelCard from "./pages/ModelCard.jsx";
+import Space from "./components/Space.jsx";
 
 const PAGES = [
-  { id: "assess", label: "Assess", render: (p) => <Assess {...p} /> },
-  { id: "portfolio", label: "Portfolio", render: () => <Portfolio /> },
-  { id: "model", label: "Model", render: (p) => <ModelCard {...p} /> },
+  { id: "assess", label: "Check one", render: (p) => <Assess {...p} /> },
+  { id: "portfolio", label: "Check a list", render: () => <Portfolio /> },
+  { id: "model", label: "How it works", render: (p) => <ModelCard {...p} /> },
 ];
 
 function Mark() {
@@ -66,11 +67,12 @@ export default function App() {
 
   return (
     <>
+      <Space />
       <header className="rail">
         <div className="rail-inner">
           <span className="wordmark">
             <Mark />
-            Churn Radar
+            <span className="wordmark-text">Churn Radar</span>
           </span>
           <nav className="nav">
             {PAGES.map((p) => (
@@ -145,6 +147,7 @@ export default function App() {
         ) : (
           active.render({ schema, info })
         )}
+        <p className="sky-hint">Psst: move your cursor near a rocket, or click one for a speed boost.</p>
       </main>
     </>
   );

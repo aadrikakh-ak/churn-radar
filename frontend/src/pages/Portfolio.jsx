@@ -1,45 +1,40 @@
 import { useMemo, useRef, useState } from "react";
 import { api } from "../api.js";
 import { bandFor } from "../components/RiskScale.jsx";
+import { Skyline } from "../components/Blocks.jsx";
 
 const money = (n) =>
   n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
 const BINS = 20;
+const REQUIRED = ["gender", "SeniorCitizen", "Partner", "Dependents", "tenure", "PhoneService",
+  "MultipleLines", "InternetService", "OnlineSecurity", "OnlineBackup", "DeviceProtection",
+  "TechSupport", "StreamingTV", "StreamingMovies", "Contract", "PaperlessBilling",
+  "PaymentMethod", "MonthlyCharges", "TotalCharges"];
 
 function Histogram({ rows }) {
   const bins = useMemo(() => {
     const counts = new Array(BINS).fill(0);
     rows.forEach((r) => {
-      const i = Math.min(BINS - 1, Math.floor(r.churn_probability * BINS));
-      counts[i] += 1;
+      counts[Math.min(BINS - 1, Math.floor(r.churn_probability * BINS))] += 1;
     });
     return counts;
   }, [rows]);
-
   const max = Math.max(...bins, 1);
-
   return (
     <>
-      <div className="histogram">
-        {bins.map((count, i) => {
-          const mid = (i + 0.5) / BINS;
-          return (
-            <div
-              key={i}
-              className={`histogram-bar tone-${bandFor(mid).token}`}
-              style={{ height: `${(count / max) * 100}%`, "--delay": `${i * 18}ms` }}
-              title={`${(i / BINS).toFixed(2)}–${((i + 1) / BINS).toFixed(2)}: ${count} customers`}
-            />
-          );
-        })}
-      </div>
+      <Skyline
+        label="How many customers sit at each level of risk"
+        columns={bins.map((count, i) => ({
+          fraction: count / max,
+          color: `var(--${bandFor((i + 0.5) / BINS).token})`,
+          title: `${i * 5}–${(i + 1) * 5}% chance: ${count} customers`,
+        }))}
+      />
       <div className="histogram-axis readout">
-        <span>0</span>
-        <span>25</span>
-        <span>50</span>
-        <span>75</span>
-        <span>100% risk</span>
+        <span>0% chance of leaving</span>
+        <span>50%</span>
+        <span>100%</span>
       </div>
     </>
   );
@@ -54,6 +49,16 @@ export default function Portfolio() {
   const [sort, setSort] = useState({ key: "churn_probability", dir: -1 });
   const [fileName, setFileName] = useState(null);
   const inputRef = useRef(null);
+
+  const tryExample = async () => {
+    try {
+      const res = await fetch("/example-customers.csv");
+      const blob = await res.blob();
+      upload(new File([blob], "example-customers.csv", { type: "text/csv" }));
+    } catch {
+      setError("Couldn't load the example file.");
+    }
+  };
 
   const upload = async (file) => {
     if (!file) return;
@@ -131,10 +136,10 @@ export default function Portfolio() {
   return (
     <>
       <header className="page-head">
-        <h1>Score a whole book</h1>
+        <h1>Check a whole list of customers</h1>
         <p>
-          Upload a customer file with the original Telco columns. Every row goes through
-          the network in one pass, ranked so the retention team can work top-down.
+          Upload a spreadsheet (CSV) of customers and every one gets a score in under a second,
+          sorted so the people most likely to leave are at the top.
         </p>
       </header>
 
@@ -159,11 +164,11 @@ export default function Portfolio() {
             upload(e.dataTransfer.files?.[0]);
           }}
         >
-          <h3>{busy ? "Scoring the file" : "Drop a CSV here"}</h3>
+          <h3>{busy ? "Checking everyone…" : "Drop a CSV file here"}</h3>
           <p>
             {busy
-              ? "One forward pass over every row."
-              : "Needs the 19 original Telco columns. A Churn column, if present, is used to score accuracy."}
+              ? "This takes about a second."
+              : "No file? Try the example list of 1,000 real customers."}
           </p>
           <input
             ref={inputRef}
@@ -179,6 +184,17 @@ export default function Portfolio() {
           >
             {busy ? "Working" : "Choose a file"}
           </button>
+          <button className="button button-quiet" style={{ marginLeft: 8 }} onClick={tryExample} disabled={busy}>
+            Try the example
+          </button>
+          <details className="drop-help">
+            <summary>What should the file look like?</summary>
+            <p>
+              One row per customer with these columns: {REQUIRED.join(", ")}. An optional{" "}
+              <code>customerID</code> labels each row, and an optional <code>Churn</code> column
+              (Yes/No) lets the app check how many real leavers it caught.
+            </p>
+          </details>
         </div>
       )}
 
@@ -186,40 +202,40 @@ export default function Portfolio() {
         <div className="section-gap">
           <dl className="stats">
             <div className="stat">
-              <dt>Customers scored</dt>
+              <dt>Customers checked</dt>
               <dd>
                 {data.count.toLocaleString()}
                 <small>{fileName}</small>
               </dd>
             </div>
             <div className="stat">
-              <dt>Flagged at risk</dt>
+              <dt>Flagged to call</dt>
               <dd>
                 {data.flagged.toLocaleString()}
-                <small>{((data.flagged / data.count) * 100).toFixed(1)}% of the book</small>
+                <small>{((data.flagged / data.count) * 100).toFixed(1)}% of the list</small>
               </dd>
             </div>
             <div className="stat">
-              <dt>Average risk</dt>
+              <dt>Average chance of leaving</dt>
               <dd>
                 {(data.mean_probability * 100).toFixed(1)}%
-                <small>cut-off at {(data.threshold * 100).toFixed(0)}%</small>
+                <small>alert line at {(data.threshold * 100).toFixed(0)}%</small>
               </dd>
             </div>
             <div className="stat">
-              <dt>Revenue at risk</dt>
+              <dt>Money at stake</dt>
               <dd>
                 {money(data.total_revenue_at_risk)}
-                <small>annualised, probability-weighted</small>
+                <small>per year, if nothing is done</small>
               </dd>
             </div>
             {accuracy && (
               <div className="stat">
-                <dt>Caught</dt>
+                <dt>Real leavers caught</dt>
                 <dd>
                   {(accuracy.recall * 100).toFixed(1)}%
                   <small>
-                    of real churners, at {(accuracy.precision * 100).toFixed(0)}% precision
+                    and {(accuracy.precision * 100).toFixed(0)}% of flags were right
                   </small>
                 </dd>
               </div>
@@ -228,8 +244,8 @@ export default function Portfolio() {
 
           <section className="panel">
             <div className="panel-head">
-              <h2>How risk is spread</h2>
-              <p>Every customer placed on the same scale used on the single-customer page.</p>
+              <h2>Where everyone lands</h2>
+              <p>Each column is a group of customers; taller means more people at that level of risk.</p>
             </div>
             <div className="panel-body">
               <Histogram rows={data.results} />
@@ -240,7 +256,7 @@ export default function Portfolio() {
             <div className="table-toolbar">
               <input
                 type="search"
-                placeholder="Find a customer ID or band"
+                placeholder="Search by customer ID or risk level"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 aria-label="Filter customers"
@@ -250,7 +266,7 @@ export default function Portfolio() {
               </span>
               <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
                 <button className="button button-quiet" onClick={downloadCsv}>
-                  Download scores
+                  Download results
                 </button>
                 <button
                   className="button button-quiet"
@@ -259,7 +275,7 @@ export default function Portfolio() {
                     setQuery("");
                   }}
                 >
-                  Score another file
+                  Check another file
                 </button>
               </div>
             </div>
@@ -269,24 +285,24 @@ export default function Portfolio() {
                   <tr>
                     <th>Customer</th>
                     <th className="sortable" onClick={() => sortBy("risk_band")}>
-                      Band
+                      Risk level
                     </th>
                     <th
                       className="sortable num"
                       onClick={() => sortBy("churn_probability")}
                       style={{ textAlign: "right" }}
                     >
-                      Risk
+                      Chance of leaving
                     </th>
                     <th
                       className="sortable num"
                       onClick={() => sortBy("expected_revenue_at_risk")}
                       style={{ textAlign: "right" }}
                     >
-                      Revenue at risk
+                      Money at stake
                     </th>
-                    <th>Action</th>
-                    {accuracy && <th>Actual</th>}
+                    <th>What to do</th>
+                    {accuracy && <th>What really happened</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -303,11 +319,11 @@ export default function Portfolio() {
                         <td className="num">{(r.churn_probability * 100).toFixed(1)}%</td>
                         <td className="num">{money(r.expected_revenue_at_risk)}</td>
                         <td style={{ color: "var(--muted)" }}>
-                          {r.will_churn ? "Contact" : "Leave alone"}
+                          {r.will_churn ? "Give them a call" : "Nothing yet"}
                         </td>
                         {accuracy && (
                           <td style={{ color: "var(--muted)" }}>
-                            {r.actual === 1 ? "Churned" : "Stayed"}
+                            {r.actual === 1 ? "Left" : "Stayed"}
                           </td>
                         )}
                       </tr>
