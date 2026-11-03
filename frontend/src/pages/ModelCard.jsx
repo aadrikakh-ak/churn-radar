@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api.js";
 import CurveChart from "../components/CurveChart.jsx";
+import { People } from "../components/Blocks.jsx";
 
 const pc = (v, d = 1) => `${(v * 100).toFixed(d)}%`;
 
@@ -16,7 +17,7 @@ export default function ModelCard({ info }) {
     return (
       <>
         <header className="page-head">
-          <h1>The model</h1>
+          <h1>How it works</h1>
         </header>
         <div className="notice" role="alert">
           {error}
@@ -29,7 +30,7 @@ export default function ModelCard({ info }) {
     return (
       <>
         <header className="page-head">
-          <h1>The model</h1>
+          <h1>How it works</h1>
         </header>
         <div className="section-gap">
           {[180, 300, 240].map((h, i) => (
@@ -42,18 +43,84 @@ export default function ModelCard({ info }) {
 
   const t = metrics.test;
   const churnRate = metrics.dataset.churn_rate;
+  const caught = Math.round(t.recall * 10);
+  const right = Math.round(t.precision * 10);
+  const reach = Math.round((metrics.lift[2]?.cumulative_capture ?? 0) * 10);
+  const total = info.rows.train + info.rows.validation + info.rows.test;
 
   return (
     <>
       <header className="page-head">
-        <h1>The model</h1>
+        <h1>How it works</h1>
         <p>
-          Everything here comes from the held-out test split the network never saw during
-          training, scored at the cut-off tuned on the validation split.
+          A neural network that learned from thousands of real customers which kinds of people
+          tend to cancel. Here is how good it is, in plain numbers.
         </p>
       </header>
 
       <div className="section-gap">
+        <section className="panel">
+          <div className="plain-grid">
+            <div className="plain-stat">
+              <People leaving={caught} tone="var(--hold)" label={`${caught} of 10 leavers caught`} />
+              <h3>Spots about {caught} in 10 people who leave</h3>
+              <p>
+                Tested on {info.rows.test.toLocaleString()} customers it had never seen before. The
+                tall blocks are the leavers it caught in time.
+              </p>
+            </div>
+            <div className="plain-stat">
+              <People leaving={right} tone="var(--watch)" label={`${right} of 10 alerts are right`} />
+              <h3>About {right} in 10 alerts are right</h3>
+              <p>
+                The rest are false alarms: people it worried about who stayed anyway. A friendly
+                call to them costs little.
+              </p>
+            </div>
+            <div className="plain-stat">
+              <People leaving={reach} tone="var(--accent)" label={`Calling the riskiest 30% reaches ${reach} of 10 leavers`} />
+              <h3>The riskiest 3 in 10 hold {reach} in 10 leavers</h3>
+              <p>
+                So a support team that only calls the top 30% of the list still reaches most of the
+                people who were about to go.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="panel">
+          <div className="panel-head">
+            <h2>From data to answer</h2>
+          </div>
+          <ol className="how">
+            <li>
+              <b>It studied real customers.</b> {total.toLocaleString()} customers of a phone and
+              internet company, and whether each one left.
+            </li>
+            <li>
+              <b>It looks at 19 facts.</b> Things like contract type, monthly bill and how long
+              they've been a customer.
+            </li>
+            <li>
+              <b>{info.model.ensemble_size} networks vote.</b> Each one guesses on its own, and the
+              average is the answer. That's steadier than trusting a single guess.
+            </li>
+            <li>
+              <b>It shows its reasons.</b> For every customer it works out which facts pushed the
+              chance up and which pulled it down.
+            </li>
+          </ol>
+          <p className="honest">
+            Honest note: a much simpler model (logistic regression) scores almost exactly the
+            same on this data. Neural networks shine with huge datasets; this one has about 7,000
+            rows. And the model spots patterns. It can't prove that an offer <i>causes</i>{" "}
+            someone to stay.
+          </p>
+        </section>
+
+        <details className="tech">
+          <summary>Technical details for data people</summary>
+          <div className="section-gap">
         <dl className="stats">
           <div className="stat">
             <dt>ROC-AUC</dt>
@@ -340,6 +407,8 @@ export default function ModelCard({ info }) {
             ))}
           </div>
         </section>
+          </div>
+        </details>
       </div>
     </>
   );

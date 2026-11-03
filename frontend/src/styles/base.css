@@ -400,5 +400,15 @@ tbody tr:last-child td {
   }
   .nav button {
     padding: 7px 9px;
+    white-space: nowrap;
+  }
+  .rail-inner {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 520px) {
+  .wordmark-text {
+    display: none;
   }
 }

@@ -78,7 +78,6 @@ export default function RiskScale({
           {(probability * 100).toFixed(1)}
           <small>%</small>
         </span>
-        <span className="scale-flag-band">{band.name} risk</span>
       </div>
 
       <div
@@ -141,7 +140,7 @@ export default function RiskScale({
             data-dragging={dragging || undefined}
             role="slider"
             tabIndex={0}
-            aria-label="Decision threshold"
+            aria-label="Alert line"
             aria-valuemin={0}
             aria-valuemax={1}
             aria-valuenow={threshold}
@@ -172,7 +171,7 @@ export default function RiskScale({
           style={{ left: pct(threshold) }}
           aria-hidden="true"
         >
-          cut-off {(threshold * 100).toFixed(0)}
+          alert {(threshold * 100).toFixed(0)}%
         </span>
       </div>
     </div>
